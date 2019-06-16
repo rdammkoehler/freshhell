@@ -11,7 +11,7 @@ export class AngularFooterComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.message = 'hello this is my message';
+    this.message = '';
   }
 
 }
