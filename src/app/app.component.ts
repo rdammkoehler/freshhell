@@ -11,8 +11,8 @@ export class AppComponent implements OnInit {
   formGroup: FormGroup;
   hells: object[] = [];
   stats = {
-    // count: 0,
-    // histogram: []
+    count: 0,
+    histogram: []
   }; // probably not very type-scripty
   optIn = false;
 
