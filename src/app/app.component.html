@@ -17,9 +17,11 @@
   Description: <input type="text" formControlName="hell">
 </label>
 <button type="Submit" (click)="submitForm()">Increase Hell</button>
+<br/><input type="checkbox">opt-in
 </form>
 <ul>
-  <li *ngFor="let hell of hells.slice(0, 9)">{{ hell }}</li>
+  <li *ngFor="let hell of hells.slice(0, 9)">{{ hell.description }} was observed at {{ hell.observed }}</li>
 </ul>
+Total Number of Hells Observed: {{ stats.count }}
 <app-angular-footer></app-angular-footer>
 
