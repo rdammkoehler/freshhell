@@ -1,1 +1,18 @@
-div { color: blue; }
+.app-page {
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+}
+
+.app-bg {
+  opacity: 0.3;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+}
+
+.app-content {
+  position: relative;
+}
