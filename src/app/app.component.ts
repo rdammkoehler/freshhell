@@ -1,67 +1,65 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
+import {NgFor} from '@angular/common';
+import {AngularFooterComponent} from './angular-footer/angular-footer.component';
+
+export interface Hell {
+  description: string;
+  observed: Date;
+}
+
+export interface Stats {
+  count: number;
+}
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  standalone: true,
+  imports: [ReactiveFormsModule, NgFor, AngularFooterComponent]
 })
 export class AppComponent implements OnInit {
 
   formGroup: FormGroup;
-  hells: object[] = [];
-  stats = {
-    count: 0,
-    histogram: []
-  }; // probably not very type-scripty
-  optIn = false;
+  hells: Hell[] = [];
+  stats: Stats = {count: 0};
 
-  constructor(private formBuilder: FormBuilder) {
-    this.hells = localStorage.getItem('hells') ? JSON.parse(localStorage.getItem('hells')) : [];
-    this.stats = localStorage.getItem('stats') ? JSON.parse(localStorage.getItem('stats')) : {count: 0};
-    this.optIn = localStorage.getItem('optIn') ? JSON.parse(localStorage.getItem('optIn')) : false;
-  }
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({hell: ['', [Validators.required], []]});
+    this.loadFromStorage();
   }
 
   submitForm() {
     if (this.formGroup.invalid) {
       return;
     }
-    const freshHell = {
+    const freshHell: Hell = {
       description: this.formGroup.value.hell,
       observed: new Date()
     };
-    this.hells = [
-      freshHell,
-      ...this.hells
-    ];
+    this.hells = [freshHell, ...this.hells].slice(0, 9);
     this.formGroup.reset();
-    localStorage.setItem('hells', JSON.stringify(this.hells.slice(0, 9)));
-    // if (this.stats.histogram) {
-    //   const key = freshHell.observed.toLocaleDateString().split('').reverse().join('').replace(/\//g, '');
-    //   if (this.stats.histogram[key]) {
-    //     this.stats.histogram[key] = this.stats.histogram[key] + 1;
-    //   } else {
-    //     this.stats.histogram[key] = 1;
-    //   }
-    // }
-    /* So what do you want to track?
-      - Total Hells
-      - Hells / Timeperiod
-      - Average time between observations
-      - what else?
-      - User settings (but not necessarily here)
-        - opt-in for reporting to the cloud
-        - ???
-     */
-    this.stats.count = this.stats.count + 1,
-      localStorage.setItem('stats', JSON.stringify(this.stats));
-    // IF opt-in, then we should send the fresh hell to a service!
-    if (this.optIn) {
-      // make an call to the endpoint
+    localStorage.setItem('hells', JSON.stringify(this.hells));
+    this.stats.count = this.stats.count + 1;
+    localStorage.setItem('stats', JSON.stringify(this.stats));
+  }
+
+  private loadFromStorage(): void {
+    try {
+      const hellsJson = localStorage.getItem('hells');
+      this.hells = hellsJson ? JSON.parse(hellsJson) : [];
+    } catch {
+      this.hells = [];
+    }
+
+    try {
+      const statsJson = localStorage.getItem('stats');
+      this.stats = statsJson ? JSON.parse(statsJson) : {count: 0};
+    } catch {
+      this.stats = {count: 0};
     }
   }
 }

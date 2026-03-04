@@ -1,20 +1,17 @@
-// This file is required by karma.conf.js and loads recursively all the .spec and framework files
-
-import 'zone.js/dist/zone-testing';
+// This file bootstraps the Angular testing environment for Karma.
+// The zone.js import path was updated from `zone.js/dist/zone-testing` to `zone.js/testing`
+// as of zone.js 0.13.x. In Angular 17+, the karma builder initialises the test environment
+// automatically via the `polyfills` array in angular.json; this file is retained for
+// compatibility with any tooling that still references it directly.
+import 'zone.js';
+import 'zone.js/testing';
 import { getTestBed } from '@angular/core/testing';
 import {
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
 
-declare const require: any;
-
-// First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting()
 );
-// Then we find all the tests.
-const context = require.context('./', true, /\.spec\.ts$/);
-// And load the modules.
-context.keys().map(context);
