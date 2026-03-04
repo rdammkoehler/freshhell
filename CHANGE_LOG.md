@@ -2,6 +2,26 @@
 
 ## [Unreleased]
 
+### Changed
+- **`app.component.html`** — Redesigned template with a clean, centered layout. Replaced the plain
+  text input with a styled `<textarea>` using JetBrains Mono font. Added semantic sections for
+  header, form, recent misfortunes list, and stats bar. Migrated from deprecated `*ngIf`/`*ngFor`
+  directives to modern Angular `@if`/`@for` control flow blocks. Fixed form submission to use
+  `(ngSubmit)` instead of `(click)`.
+- **`app.component.css`** — Complete visual overhaul with modern styling: gradient background,
+  glassmorphic card for the form, Playfair Display serif headings, Inter sans-serif body text,
+  JetBrains Mono monospace textarea, gradient submit button with hover effects, and card-style
+  list items with hover animations.
+- **`index.html`** — Replaced Roboto font import with Inter, Playfair Display, and JetBrains Mono
+  from Google Fonts.
+- **`styles.css`** — Updated global styles to use Inter as the base font with font smoothing.
+- **`app.component.ts`** — Removed unused `NgFor` import (no longer needed with `@for` block).
+- **`app.component.spec.ts`** — Rewrote tests to fix all known issues: replaced deprecated `async`
+  with native `async/await`, added `ReactiveFormsModule` import, mocked `localStorage`, removed
+  stale `title` property test, added tests for form validation, submission, and stats display.
+- **`angular-footer.component.spec.ts`** — Replaced deprecated `async` with native `async/await`,
+  updated TestBed config to use standalone component imports.
+
 ### Fixed
 - **`app.component.ts`** — Defined `Hell` and `Stats` TypeScript interfaces; replaced `object[]`
   and untyped stats literal with strongly-typed properties, enabling full compile-time checks.

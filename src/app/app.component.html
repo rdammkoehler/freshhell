@@ -1,56 +1,57 @@
-<!-- TODO [LOW] Stale boilerplate comment: remove this leftover placeholder comment from the Angular CLI scaffold. -->
-<!--The content below is only a placeholder and can be replaced.-->
-<!-- TODO [LOW] Inline style: `style="text-align:center"` should be a CSS class in app.component.css
-     to keep styling concerns out of the template. -->
-<div style="text-align:center">
-  <h1>
-    FreshHell!
-  </h1>
-</div>
-<div class="app-page">
-  <img class="app-bg" src="assets/devil-29973_640.png" alt="">
-  <div class="app-content">
-    <p>
-      What Fresh Hell is This! An application that helps you keep track of your hellish experiences. Here you can
-      record every hellish experience you have had. The application will show you your most recent misfortunes as well
-      as keep some simple stats about how often you have these experiences.
-    </p>
-    <p>
-      This cartharsis brought to you by <a href="https://twitter.com/net_zer0" target="_blank">@net_zer0</a>
-    </p>
-    <form [formGroup]="formGroup">
-      <label>
-        Description: <input type="text" formControlName="hell">
-      </label>
-      <!-- TODO [LOW] Button type case: `type="Submit"` should be lowercase `type="submit"`.
-           HTML spec requires lowercase attribute values for button type. -->
-      <!-- TODO [MEDIUM] Form not submitted on Enter key: using `(click)` instead of `(ngSubmit)` on
-           the form means pressing Enter in the text field does not trigger submission. Bind to the
-           form's submit event instead:
-             <form [formGroup]="formGroup" (ngSubmit)="submitForm()">
-           and change the button to `type="submit"`. -->
-      <button type="Submit" (click)="submitForm()">Increase Hell</button>
-      <!-- TODO [HIGH] Unbound checkbox: this checkbox has no binding to the component's `optIn`
-           property or to the formGroup. Changes to it are silently discarded and `optIn` is never
-           updated from the UI. Either add it to the formGroup (`formControlName="optIn"`) or bind
-           it with `[(ngModel)]="optIn"` (requires FormsModule). -->
-      <!-- TODO [LOW] Layout via <br/>: using a line-break tag for spacing between form elements is
-           poor practice. Use CSS margin/padding on the surrounding elements instead. -->
-      <br/><input type="checkbox">opt-in
-    </form>
-    <!-- TODO [LOW] Slice in template: `hells.slice(0, 9)` duplicates the cap that already exists in
-         the component's localStorage write. Trim the array in the component (or use a getter) so
-         the template only iterates `hells` without embedded logic. -->
-    <!-- TODO [MEDIUM] Date renders as raw string: `hell.observed` is stored as a JSON string in
-         localStorage. After JSON.parse, it comes back as a string, not a Date object, so Angular's
-         date pipe cannot format it correctly. Either pipe it through Angular's `date` pipe with an
-         explicit format (`hell.observed | date:'medium'`) and reconstruct Date objects on load, or
-         store the ISO string and parse it back on retrieval. -->
-    <ul>
-      <li *ngFor="let hell of hells.slice(0, 9)">{{ hell.description }} was observed at {{ hell.observed }}</li>
-    </ul>
-    Total Number of Hells Observed: {{ stats.count }}
-  </div>
-</div>
-<app-angular-footer></app-angular-footer>
+<div class="app-container">
+  <div class="app-page">
+    <img class="app-bg" src="assets/devil-29973_640.png" alt="">
+    <div class="app-content">
 
+      <header class="app-header">
+        <h1 class="app-title">Fresh Hell!</h1>
+        <p class="app-subtitle">
+          What Fresh Hell is This? Record every hellish experience.
+          Your most recent misfortunes and simple stats, all in one place.
+        </p>
+        <p class="app-credit">
+          Catharsis brought to you by
+          <a href="https://x.com/publius503" target="_blank" rel="noopener">{{"@"}}publius503</a>
+        </p>
+      </header>
+
+      <form class="hell-form" [formGroup]="formGroup" (ngSubmit)="submitForm()">
+        <label class="form-label" for="hellInput">Describe your fresh hell</label>
+        <textarea
+          id="hellInput"
+          class="hell-textarea"
+          formControlName="hell"
+          rows="3"
+          placeholder="What happened this time…"
+        ></textarea>
+        <div class="form-actions">
+          <button class="submit-btn" type="submit">Increase Hell</button>
+          <label class="opt-in-label">
+            <input type="checkbox" class="opt-in-checkbox"> Opt-in to cloud sync
+          </label>
+        </div>
+      </form>
+
+      @if (hells.length > 0) {
+        <section class="hells-list">
+          <h2 class="section-heading">Recent Misfortunes</h2>
+          <ul>
+            @for (hell of hells.slice(0, 9); track hell.observed) {
+              <li class="hell-item">
+                <span class="hell-description">{{ hell.description }}</span>
+                <span class="hell-date">{{ hell.observed }}</span>
+              </li>
+            }
+          </ul>
+        </section>
+      }
+
+      <div class="stats-bar">
+        Total Hells Observed: <strong>{{ stats.count }}</strong>
+      </div>
+
+    </div>
+  </div>
+
+  <app-angular-footer></app-angular-footer>
+</div>

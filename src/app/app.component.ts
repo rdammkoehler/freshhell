@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
-import {NgFor} from '@angular/common';
 import {AngularFooterComponent} from './angular-footer/angular-footer.component';
 
 export interface Hell {
@@ -17,7 +16,7 @@ export interface Stats {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   standalone: true,
-  imports: [ReactiveFormsModule, NgFor, AngularFooterComponent]
+  imports: [ReactiveFormsModule, AngularFooterComponent]
 })
 export class AppComponent implements OnInit {
 
