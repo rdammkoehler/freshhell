@@ -1,5 +1,26 @@
 # Change Log
 
+## [1.0.0] — React Version
+
+### Added
+- **`ReactVersion/`** — Recreated FreshHell as a modern React app with Vite, TypeScript, and React 19.
+  Identical functionality and visual design to the Angular version.
+- **Vite + TypeScript** build tooling with `vite.config.ts` and strict `tsconfig.json`.
+- **Vitest + React Testing Library** test suite (`vitest.config.ts`, 9 tests across 2 files).
+- **`src/hooks/useLocalStorage.ts`** — Custom `useHellStorage()` hook with functional state updaters
+  to prevent stale closure bugs. Reads/writes `hells` and `stats` to localStorage.
+- **`src/App.tsx`** — Main component with controlled textarea form, hell list, and stats bar.
+  Same CSS class names as Angular version for visual parity.
+- **`src/components/ReactFooter/`** — Footer component with React logo (replaces Angular logo).
+- **`server.js`** — Express 5 production server for Vite's flat `dist/` output.
+
+### Changed
+- Moved Angular app to `AngularVersion/` directory.
+
+### Removed
+- **Opt-in checkbox** — was unbound/dead in the Angular version; not carried over to React.
+- **Dead `message` property** from footer component; not carried over to React.
+
 ## [Unreleased]
 
 ### Changed
